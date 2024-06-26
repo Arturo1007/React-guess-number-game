@@ -1,0 +1,19 @@
+// Variables.
+:root {
+  --primaryColor: orange;
+  --secondaryColor: gold;
+  --terciaryColor: #242424;
+}
+
+// Global styles.
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: var(--terciaryColor);
+  color: white;
+}

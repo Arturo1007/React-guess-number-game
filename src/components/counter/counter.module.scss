@@ -1,0 +1,45 @@
+.countContainer {
+  width: 100%;
+  min-height: 200px;
+  background-color: var(--primaryColor);
+  display: flex;
+  flex-direction: column;
+
+  p {
+    color: var(--secondaryColor);
+    font-weight: bold;
+  }
+
+  .count {
+    margin-top: 1rem;
+    color: var(--terciaryColor);
+  }
+
+   p {
+    margin-top: 0.3em;
+    font-size: 2em;
+    text-align: center;
+  }
+
+  .buttonsContainer {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+    gap: 2em;
+    
+
+    button {
+        cursor: pointer;
+        padding: .5em 1em;
+        border: none;
+        background-color: var(--secondaryColor);
+        color: var(--terciaryColor);
+        font-weight: bold;
+      
+      &:hover, 
+      &:active {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
