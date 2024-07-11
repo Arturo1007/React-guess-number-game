@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext, useReducer } from "react";
 import { Difficulty } from "../../Types";
 import styles from "./counter.module.scss";
 import Swal from "sweetalert2";
@@ -8,9 +8,19 @@ interface Props {
   difficulty: Difficulty;
 }
 
+interface CountState {
+  count: number;
+}
+
+interface CountAction {
+  type: "increment" | "decrement" | "reset";
+}
+
 export default function Counter(props: Props) {
   const effectRan = useRef(false);
-  const [count, setCount] = useState(0);
+  const [countState, countDispatch] = useReducer(countReducer, {
+    count: 0,
+  });
   let [randomNumber, setrandomNumber] = useState(0);
   let [triesNumber, setTriesNumber] = useState(0);
   let [message, setMessage] = useState("");
@@ -24,8 +34,23 @@ export default function Counter(props: Props) {
     };
   }, [props.difficulty]);
 
+  // Reducer function.
+  function countReducer(state: CountState, action: CountAction) {
+    const { type } = action;
+    switch (type) {
+      case "increment": 
+        return {...state, count: state.count + 1}
+      case "decrement": 
+        return {...state, count: state.count - 1}
+      case "reset": 
+        return {...state, count: 0}
+      default:
+        return state;
+    }
+  }
+
   const initGame = () => {
-    setCount (() => 0)
+    countDispatch({ type: "reset" });
     if (props.difficulty == "Easy") {
       setrandomNumber(() => {
         return Math.floor(Math.random() * 11);
@@ -47,37 +72,37 @@ export default function Counter(props: Props) {
 
   const increaseCount = () => {
     if (props.difficulty == "Easy") {
-      if (count < 10) {
-        setCount((prevCount) => prevCount + 1);
+      if (countState.count < 10) {
+        countDispatch({ type: "increment" });
       }
     }
 
     if (props.difficulty == "Normal") {
-      if (count < 20) {
-        setCount((prevCount) => prevCount + 1);
+      if (countState.count < 20) {
+        countDispatch({ type: "increment" });
       }
     }
 
     if (props.difficulty == "Hard") {
-      if (count < 30) {
-        setCount((prevCount) => prevCount + 1);
+      if (countState.count < 30) {
+        countDispatch({ type: "increment" });
       }
     }
   };
 
   const reduceCount = () => {
-    if (count > 0) {
-      setCount((prevCount) => prevCount - 1);
+    if (countState.count > 0) {
+      countDispatch({ type: "decrement" });
     }
   };
 
   const guessNumber = () => {
     // Number guessed.
-    if (count === randomNumber) {
+    if (countState.count === randomNumber) {
       Swal.fire({
         title: "You found the number!",
         text: "Number of tries: " + triesNumber,
-        icon: "success"
+        icon: "success",
       });
       initGame();
       setMessage(() => "");
@@ -88,7 +113,7 @@ export default function Counter(props: Props) {
         return prevNumber + 1;
       });
       // Set message
-      if (count > randomNumber) {
+      if (countState.count > randomNumber) {
         setMessage(() => "Lower");
       } else {
         setMessage(() => "Higher");
@@ -96,15 +121,16 @@ export default function Counter(props: Props) {
     }
   };
 
-
   return (
     <>
       <div className={styles.countContainer}>
-        <p className={styles.userGreetings}>Found the number {useTodayEmoji()}!  </p>
+        <p className={styles.userGreetings}>
+          Found the number {useTodayEmoji()}!{" "}
+        </p>
         <p className={styles.userGreetings}>{props.difficulty} Dificulty</p>
         <p className={styles.count}>
           <b>
-            Count: <span>{count}</span>
+            Count: <span>{countState.count}</span>
           </b>
         </p>
         {triesNumber ? <p>Attempt: {triesNumber}</p> : null}
