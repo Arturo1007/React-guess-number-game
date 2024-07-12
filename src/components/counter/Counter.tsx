@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext, useReducer } from "react";
+import { useEffect, useState, useRef, useReducer } from "react";
 import { Difficulty } from "../../Types";
 import styles from "./counter.module.scss";
 import Swal from "sweetalert2";

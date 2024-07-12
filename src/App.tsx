@@ -3,7 +3,7 @@ import Counter from "./components/counter/Counter";
 import { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 import { Difficulty } from "./Types";
-import { TodayEmoji, useTodayEmoji } from "./context";
+import { TodayEmoji } from "./context";
 
 
 function App() {
@@ -35,7 +35,6 @@ function App() {
     };
   }, []);
 
-  let inputRef = useRef(null);
   return (
     <>
       <header></header>
