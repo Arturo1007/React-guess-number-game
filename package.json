@@ -1,5 +1,5 @@
 {
-  "homepage": "http://Arturo1007.github.io/react-guess-number-game",
+  "homepage": "https://Arturo1007.github.io/react-guess-number-game",
   "name": "react-app",
   "private": true,
   "version": "0.0.0",
@@ -10,7 +10,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
